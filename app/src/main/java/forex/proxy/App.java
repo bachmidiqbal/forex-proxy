@@ -1,6 +1,7 @@
 package forex.proxy;
 
 import forex.proxy.client.FxProviderClient;
+import forex.proxy.constant.Constant;
 import forex.proxy.controller.FxRatesController;
 import forex.proxy.service.FxRatesService;
 import forex.proxy.service.FxRatesServiceImpl;
@@ -15,6 +16,6 @@ public class App {
         FxRatesController fxRatesController = new FxRatesController(fxRatesService);
 
         Javalin app = Javalin.create().start(7070);
-        app.get("/rates", fxRatesController);
+        app.get(Constant.RATES, fxRatesController);
     }
 }
