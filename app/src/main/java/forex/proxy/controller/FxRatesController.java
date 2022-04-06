@@ -1,5 +1,7 @@
 package forex.proxy.controller;
 
+import java.util.List;
+import com.google.gson.Gson;
 import forex.proxy.model.FxRateResponse;
 import forex.proxy.service.FxRatesService;
 import io.javalin.http.Context;
@@ -15,9 +17,9 @@ public class FxRatesController implements Handler {
 
     @Override
     public void handle(Context ctx) throws Exception {
-        String[] arr = new String[] {"USDJPY"};
-        FxRateResponse fxRateResponse = fxRatesService.getRates(arr);
-        ctx.result(fxRateResponse.toString());
+        List<String> pairs = ctx.queryParams("pair");
+        FxRateResponse fxRateResponse = fxRatesService.getRates(pairs);
+        Gson gson = new Gson();
+        ctx.result(gson.toJson(fxRateResponse));
     }
-
 }

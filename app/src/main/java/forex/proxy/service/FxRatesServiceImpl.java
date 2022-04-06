@@ -1,9 +1,8 @@
 package forex.proxy.service;
 
 import java.io.IOException;
-
+import java.util.List;
 import com.google.gson.Gson;
-
 import forex.proxy.client.FxProviderClient;
 import forex.proxy.model.FxRate;
 import forex.proxy.model.FxRateResponse;
@@ -17,7 +16,7 @@ public class FxRatesServiceImpl implements FxRatesService {
     }
 
     @Override
-    public FxRateResponse getRates(String[] pairs) throws IOException {
+    public FxRateResponse getRates(List<String> pairs) throws IOException {
         String res = fxProviderClient.getRates(pairs);
         FxRateResponse fxRateResponse = new FxRateResponse();
 

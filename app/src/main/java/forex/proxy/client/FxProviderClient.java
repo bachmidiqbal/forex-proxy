@@ -1,6 +1,7 @@
 package forex.proxy.client;
 
 import java.io.IOException;
+import java.util.List;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,7 +18,7 @@ public class FxProviderClient {
         this.token = token;
     }
 
-    public String getRates(String[] pairs) throws IOException {
+    public String getRates(List<String> pairs) throws IOException {
         HttpUrl.Builder uBuilder = HttpUrl.parse(this.baseUrl + "/rates").newBuilder();
         
         for (String pair : pairs) {

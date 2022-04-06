@@ -1,10 +1,9 @@
 package forex.proxy.service;
 
 import java.io.IOException;
-
-import forex.proxy.model.FxRate;
+import java.util.List;
 import forex.proxy.model.FxRateResponse;
 
 public interface FxRatesService {
-    public FxRateResponse getRates(String[] pairs) throws IOException;
+    public FxRateResponse getRates(List<String> pairs) throws IOException;
 }
