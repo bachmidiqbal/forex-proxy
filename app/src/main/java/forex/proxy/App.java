@@ -7,6 +7,10 @@ import forex.proxy.constant.Constant;
 import forex.proxy.controller.FxRatesController;
 import forex.proxy.service.FxRatesService;
 import forex.proxy.service.FxRatesServiceImpl;
+import forex.proxy.validator.QueryParamValidator;
+import forex.proxy.validator.TokenValidator;
+import forex.proxy.validator.Validator;
+import forex.proxy.validator.ValidatorHandler;
 import io.javalin.Javalin;
 
 public class App {
@@ -20,8 +24,14 @@ public class App {
         FxRatesService fxRatesService = new FxRatesServiceImpl(fxProviderClient);
         FxRatesController fxRatesController = new FxRatesController(fxRatesService);
 
+        TokenValidator tokenValidator = new TokenValidator("testSecret");
+        QueryParamValidator queryParamValidator = new QueryParamValidator();
+        Validator[] validators = new Validator[] { tokenValidator, queryParamValidator };
+        ValidatorHandler validatorHandler = new ValidatorHandler(validators);
+
         int port = Integer.parseInt(config.getAppPort());
         Javalin app = Javalin.create().start(port);
+        app.before(Constant.RATES, validatorHandler);
         app.get(Constant.RATES, fxRatesController);
     }
 }

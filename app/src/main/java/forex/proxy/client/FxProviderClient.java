@@ -15,7 +15,6 @@ import forex.proxy.constant.Constant;
 
 public class FxProviderClient {
     private static final Logger logger = LoggerFactory.getLogger(FxProviderClient.class);
-    private static final String TOKEN_HEADER = "token";
     private String baseUrl;
     private String token;
     private long timeout;
@@ -41,20 +40,21 @@ public class FxProviderClient {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(uri)
                     .timeout(Duration.ofSeconds(this.timeout))
-                    .header(TOKEN_HEADER, this.token)
+                    .header(Constant.TOKEN, this.token)
                     .GET()
                     .build();
 
             HttpResponse<String> httpResponse = this.httpClient.send(httpRequest, BodyHandlers.ofString());
             if (httpResponse.statusCode() != 200) {
-                return Constant.ERROR;
+                logger.error("fxServerRC: " + httpResponse.statusCode());
+                return null;
             }
 
             response = httpResponse.body();
 
         } catch (URISyntaxException | InterruptedException | IOException e) {
             logger.error(e.getMessage());
-            return Constant.ERROR;
+            return null;
         }
 
         return response;

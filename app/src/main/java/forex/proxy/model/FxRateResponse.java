@@ -2,14 +2,14 @@ package forex.proxy.model;
 
 public class FxRateResponse {
     private FxRate[] fxRates;
-    private String status;
+    private String errorMessage;
 
     public FxRateResponse() {
     }
 
-    public FxRateResponse(FxRate[] fxRates, String status) {
+    public FxRateResponse(FxRate[] fxRates, String errorMessage) {
         this.fxRates = fxRates;
-        this.status = status;
+        this.errorMessage = errorMessage;
     }
 
     public FxRate[] getFxRates() {
@@ -20,20 +20,12 @@ public class FxRateResponse {
         this.fxRates = fxRates;
     }
 
-    public String getStatus() {
-        return this.status;
+    public String getErrorMessage() {
+        return this.errorMessage;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " fxRates='" + getFxRates() + "'" +
-                ", status='" + getStatus() + "'" +
-                "}";
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
 }
