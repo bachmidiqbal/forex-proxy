@@ -71,17 +71,16 @@ public class FxRate {
         this.timestamp = timestamp;
     }
 
-
     @Override
     public String toString() {
         return "{" +
-            " from='" + getFrom() + "'" +
-            ", to='" + getTo() + "'" +
-            ", bid='" + getBid() + "'" +
-            ", ask='" + getAsk() + "'" +
-            ", price='" + getPrice() + "'" +
-            ", timestamp='" + getTimestamp() + "'" +
-            "}";
+                " from='" + getFrom() + "'" +
+                ", to='" + getTo() + "'" +
+                ", bid='" + getBid() + "'" +
+                ", ask='" + getAsk() + "'" +
+                ", price='" + getPrice() + "'" +
+                ", timestamp='" + getTimestamp() + "'" +
+                "}";
     }
 
 }

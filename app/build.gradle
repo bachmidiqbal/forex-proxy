@@ -3,6 +3,9 @@ plugins {
     id 'application'
 }
 
+sourceCompatibility = 11
+targetCompatibility = 11
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -15,7 +18,6 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
     implementation 'io.javalin:javalin:4.4.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.slf4j:slf4j-simple:1.7.36'
 }

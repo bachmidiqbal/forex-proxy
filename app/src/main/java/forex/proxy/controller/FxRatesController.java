@@ -19,7 +19,7 @@ public class FxRatesController implements Handler {
     @Override
     public void handle(Context ctx) throws Exception {
         List<String> pairs = ctx.queryParams(Constant.PAIR);
-        FxRateResponse fxRateResponse = fxRatesService.getRates(pairs);
+        FxRateResponse fxRateResponse = (FxRateResponse) fxRatesService.getRates(pairs);
         Gson gson = new Gson();
         ctx.result(gson.toJson(fxRateResponse));
     }

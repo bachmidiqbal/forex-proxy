@@ -31,9 +31,9 @@ public class FxRateResponse {
     @Override
     public String toString() {
         return "{" +
-            " fxRates='" + getFxRates() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
+                " fxRates='" + getFxRates() + "'" +
+                ", status='" + getStatus() + "'" +
+                "}";
     }
 
 }

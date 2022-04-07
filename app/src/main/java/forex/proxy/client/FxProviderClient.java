@@ -1,44 +1,71 @@
 package forex.proxy.client;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import forex.proxy.constant.Constant;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class FxProviderClient {
+    private static final Logger logger = LoggerFactory.getLogger(FxProviderClient.class);
     private static final String TOKEN_HEADER = "token";
-    private OkHttpClient okHttpClient;
     private String baseUrl;
     private String token;
+    private long timeout;
+    private HttpClient httpClient;
 
-    public FxProviderClient(OkHttpClient okHttpClient, String baseUrl, String token) {
-        this.okHttpClient = okHttpClient;
+    public FxProviderClient(String baseUrl, String token, long timeout, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         this.token = token;
+        this.timeout = timeout;
+        this.httpClient = httpClient;
     }
 
-    public String getRates(List<String> pairs) throws IOException {
-        HttpUrl.Builder uBuilder = HttpUrl.parse(this.baseUrl + Constant.RATES).newBuilder();
-        
-        for (String pair : pairs) {
-            uBuilder.addQueryParameter(Constant.PAIR, pair);
+    public String getRates(List<String> pairs) {
+        String queryParams = getQueryParams(pairs);
+        String uriString = this.baseUrl + Constant.RATES;
+        if (pairs.size() > 0) {
+            uriString += queryParams;
         }
+        logger.info("uriString: " + uriString);
+        String response;
+        try {
+            URI uri = new URI(uriString);
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .timeout(Duration.ofSeconds(this.timeout))
+                    .header(TOKEN_HEADER, this.token)
+                    .GET()
+                    .build();
 
-        String url = uBuilder.build().toString();
-
-        Request request = new Request.Builder()
-            .url(url)
-            .header(TOKEN_HEADER, this.token)
-            .build();
-
-        try (Response response = this.okHttpClient.newCall(request).execute();) {
-            if (response.code() != 200) {
+            HttpResponse<String> httpResponse = this.httpClient.send(httpRequest, BodyHandlers.ofString());
+            if (httpResponse.statusCode() != 200) {
                 return Constant.ERROR;
             }
-            return response.body().string();
+
+            response = httpResponse.body();
+
+        } catch (URISyntaxException | InterruptedException | IOException e) {
+            logger.error(e.getMessage());
+            return Constant.ERROR;
         }
+
+        return response;
+    }
+
+    private String getQueryParams(List<String> pairs) {
+        String queryParams = "?";
+        for (String pair : pairs) {
+            queryParams += "pair=" + pair + "&";
+        }
+
+        return queryParams.substring(0, queryParams.length() - 1);
     }
 }
