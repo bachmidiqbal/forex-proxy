@@ -8,7 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
-import java.util.List;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import forex.proxy.constant.Constant;
@@ -27,12 +27,13 @@ public class FxProviderClient {
         this.httpClient = httpClient;
     }
 
-    public String getRates(List<String> pairs) {
+    public String getRates(Set<String> pairs) {
         String queryParams = getQueryParams(pairs);
         String uriString = this.baseUrl + Constant.RATES;
         if (pairs.size() > 0) {
             uriString += queryParams;
         }
+
         logger.info("uriString: " + uriString);
         String response;
         try {
@@ -60,7 +61,7 @@ public class FxProviderClient {
         return response;
     }
 
-    private String getQueryParams(List<String> pairs) {
+    private String getQueryParams(Set<String> pairs) {
         String queryParams = "?";
         for (String pair : pairs) {
             queryParams += "pair=" + pair + "&";

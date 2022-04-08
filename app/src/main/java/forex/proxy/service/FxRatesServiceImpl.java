@@ -1,6 +1,8 @@
 package forex.proxy.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
@@ -19,7 +21,8 @@ public class FxRatesServiceImpl implements FxRatesService {
 
     @Override
     public FxRateResponse getRates(List<String> pairs) {
-        String res = fxProviderClient.getRates(pairs);
+        Set<String> pairSet = removeDuplicate(pairs);
+        String res = fxProviderClient.getRates(pairSet);
         FxRateResponse fxRateResponse = new FxRateResponse();
         fxRateResponse.setErrorMessage("Failed to get response from FX Server!");
 
@@ -36,5 +39,14 @@ public class FxRatesServiceImpl implements FxRatesService {
         }
 
         return fxRateResponse;
+    }
+
+    private Set<String> removeDuplicate(List<String> pairs) {
+        Set<String> pairSet = new HashSet<>();
+        for (String pair : pairs) {
+            pairSet.add(pair);
+        }
+
+        return pairSet;
     }
 }
