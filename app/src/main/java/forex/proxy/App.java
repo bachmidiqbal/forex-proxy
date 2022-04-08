@@ -1,10 +1,13 @@
 package forex.proxy;
 
 import java.net.http.HttpClient;
+import forex.proxy.cache.Cache;
+import forex.proxy.cache.MapCache;
 import forex.proxy.client.FxProviderClient;
 import forex.proxy.config.Config;
 import forex.proxy.constant.Constant;
 import forex.proxy.controller.FxRatesController;
+import forex.proxy.model.FxRate;
 import forex.proxy.service.FxRatesService;
 import forex.proxy.service.FxRatesServiceImpl;
 import forex.proxy.validator.QueryParamValidator;
@@ -21,7 +24,8 @@ public class App {
         long timeout = Long.parseLong(config.getHttpTimeout());
         FxProviderClient fxProviderClient = new FxProviderClient(config.getBaseUrl(), config.getHttpToken(), timeout,
                 httpClient);
-        FxRatesService fxRatesService = new FxRatesServiceImpl(fxProviderClient);
+        Cache<String, FxRate> cache = new MapCache<>();
+        FxRatesService fxRatesService = new FxRatesServiceImpl(fxProviderClient, cache);
         FxRatesController fxRatesController = new FxRatesController(fxRatesService);
 
         TokenValidator tokenValidator = new TokenValidator(config.getAppSecret());
