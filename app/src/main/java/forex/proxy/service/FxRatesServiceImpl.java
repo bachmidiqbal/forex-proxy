@@ -8,6 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import forex.proxy.client.FxProviderClient;
+import forex.proxy.constant.Constant;
 import forex.proxy.model.FxRate;
 import forex.proxy.model.FxRateResponse;
 
@@ -24,7 +25,7 @@ public class FxRatesServiceImpl implements FxRatesService {
         Set<String> pairSet = removeDuplicate(pairs);
         String res = fxProviderClient.getRates(pairSet);
         FxRateResponse fxRateResponse = new FxRateResponse();
-        fxRateResponse.setErrorMessage("Failed to get response from FX Server!");
+        fxRateResponse.setErrorMessage(Constant.ERR3);
 
         if (res != null) {
             try {

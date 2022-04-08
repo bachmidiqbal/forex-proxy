@@ -24,7 +24,7 @@ public class App {
         FxRatesService fxRatesService = new FxRatesServiceImpl(fxProviderClient);
         FxRatesController fxRatesController = new FxRatesController(fxRatesService);
 
-        TokenValidator tokenValidator = new TokenValidator("testSecret");
+        TokenValidator tokenValidator = new TokenValidator(config.getAppSecret());
         QueryParamValidator queryParamValidator = new QueryParamValidator();
         Validator[] validators = new Validator[] { tokenValidator, queryParamValidator };
         ValidatorHandler validatorHandler = new ValidatorHandler(validators);

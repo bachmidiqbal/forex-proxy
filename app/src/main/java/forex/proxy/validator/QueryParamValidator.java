@@ -10,15 +10,15 @@ public class QueryParamValidator implements Validator {
 
     private final Map<String, String> currencies = new HashMap<>() {
         {
-            put("AUD", "AUD");
-            put("CAD", "CAD");
-            put("CHF", "CHF");
-            put("EUR", "EUR");
-            put("GBP", "GBP");
-            put("NZD", "NZD");
-            put("JPY", "JPY");
-            put("SGD", "SGD");
-            put("USD", "USD");
+            put(Constant.AUD, Constant.AUD);
+            put(Constant.CAD, Constant.CAD);
+            put(Constant.CHF, Constant.CHF);
+            put(Constant.EUR, Constant.EUR);
+            put(Constant.GBP, Constant.GBP);
+            put(Constant.NZD, Constant.NZD);
+            put(Constant.JPY, Constant.JPY);
+            put(Constant.SGD, Constant.SGD);
+            put(Constant.USD, Constant.USD);
         }
     };
 
@@ -31,7 +31,7 @@ public class QueryParamValidator implements Validator {
         for (String pair : pairs) {
             if (pair.length() != 6 || currencies.get(pair.substring(0, 3)) == null
                     || currencies.get(pair.substring(3, 6)) == null) {
-                return "Invalid currency pair!";
+                return Constant.ERR2;
             }
         }
         return null;

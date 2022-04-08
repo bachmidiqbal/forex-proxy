@@ -15,7 +15,7 @@ public class TokenValidator implements Validator {
     public String validate(Context ctx) {
         String token = ctx.header(Constant.TOKEN);
         if (!this.appSecret.equals(token)) {
-            return "Invalid token!";
+            return Constant.ERR1;
         }
         return null;
     }
