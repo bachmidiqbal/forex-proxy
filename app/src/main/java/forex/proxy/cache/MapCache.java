@@ -19,4 +19,9 @@ public class MapCache<K,V> implements Cache<K,V> {
     public void set(K key, V value) {
         map.put(key, value);
     }
+
+    @Override
+    public int size() {
+        return map.size();
+    }
 }
