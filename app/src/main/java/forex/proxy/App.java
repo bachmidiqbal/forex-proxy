@@ -35,6 +35,7 @@ public class App {
 
         int port = Integer.parseInt(config.getAppPort());
         Javalin app = Javalin.create().start(port);
+        
         app.before(Constant.RATES, validatorHandler);
         app.get(Constant.RATES, fxRatesController);
     }
