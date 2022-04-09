@@ -52,7 +52,6 @@ public class FxRatesServiceImpl implements FxRatesService {
                 fxRateResponse.setErrorMessage(null);
                 addToCache(fxRates);
             } catch (JsonSyntaxException e) {
-                logger.info("fxServerResponse: " + res);
                 logger.error(e.getMessage());
             }
         }

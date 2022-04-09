@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Config {
+    private static final String EMPTY = "";
     private static final Logger logger = LoggerFactory.getLogger(Config.class);
     private String baseUrl;
     private String httpToken;
@@ -17,23 +18,23 @@ public class Config {
         List<String> errs = new ArrayList<String>();
 
         this.baseUrl = System.getenv("FX_PROXY_BASE_URL");
-        if (this.baseUrl == null) {
+        if (this.baseUrl == null || EMPTY.equals(this.baseUrl)) {
             errs.add("envar FX_PROXY_BASE_URL is missing");
         }
         this.httpToken = System.getenv("FX_PROXY_HTTP_TOKEN");
-        if (this.httpToken == null) {
+        if (this.httpToken == null || EMPTY.equals(this.httpToken)) {
             errs.add("envar FX_PROXY_HTTP_TOKEN is missing");
         }
         this.httpTimeout = System.getenv("FX_PROXY_HTTP_TIMEOUT");
-        if (this.httpTimeout == null) {
+        if (this.httpTimeout == null || EMPTY.equals(this.httpTimeout)) {
             errs.add("envar FX_PROXY_HTTP_TIMEOUT is missing");
         }
         this.appPort = System.getenv("FX_PROXY_APP_PORT");
-        if (this.appPort == null) {
+        if (this.appPort == null || EMPTY.equals(this.appPort)) {
             errs.add("envar FX_PROXY_APP_PORT is missing");
         }
         this.appSecret = System.getenv("FX_PROXY_APP_SECRET");
-        if (this.appSecret == null) {
+        if (this.appSecret == null || EMPTY.equals(this.appSecret)) {
             errs.add("envar FX_PROXY_APP_SECRET is missing");
         }
 

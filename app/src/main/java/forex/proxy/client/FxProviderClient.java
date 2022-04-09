@@ -58,6 +58,7 @@ public class FxProviderClient {
             return null;
         }
 
+        logger.info("fxServerResponseBody: " + response);
         return response;
     }
 
