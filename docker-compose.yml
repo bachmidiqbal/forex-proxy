@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  forex-proxy:
+    build: .
+    environment:
+      - FX_PROXY_BASE_URL=http://one-frame:8080
+      - FX_PROXY_HTTP_TOKEN=10dc303535874aeccc86a8251e6992f5
+      - FX_PROXY_HTTP_TIMEOUT=30
+      - FX_PROXY_APP_PORT=7070
+      - FX_PROXY_APP_SECRET=d623ec59-118f-4e8c-a874-653b127af546
+    ports:
+      - "7070:7070"
+    depends_on:
+      - "one-frame"
+  one-frame:
+    image: "paidyinc/one-frame"
