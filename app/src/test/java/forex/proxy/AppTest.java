@@ -115,6 +115,7 @@ class AppTest {
             fxRateResponse.setErrorMessage("Invalid token!");
 
             assertEquals(new Gson().toJson(fxRateResponse), response.body().string());
+            assertEquals(400, response.code());
         });
     }
 
@@ -149,6 +150,7 @@ class AppTest {
             fxRateResponse.setErrorMessage("Invalid currency pair!");
 
             assertEquals(new Gson().toJson(fxRateResponse), response.body().string());
+            assertEquals(400, response.code());
         });
     }
 
