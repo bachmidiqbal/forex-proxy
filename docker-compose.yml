@@ -3,7 +3,7 @@ services:
   forex-proxy:
     build: .
     environment:
-      - FX_PROXY_BASE_URL=http://one-frame:8080
+      - FX_PROXY_BASE_URL=http://nginx:4000
       - FX_PROXY_HTTP_TOKEN=10dc303535874aeccc86a8251e6992f5
       - FX_PROXY_HTTP_TIMEOUT=30
       - FX_PROXY_APP_PORT=7070
@@ -11,6 +11,14 @@ services:
     ports:
       - "7070:7070"
     depends_on:
-      - "one-frame"
+      - "nginx"
   one-frame:
     image: "paidyinc/one-frame"
+    deploy:
+      replicas: 10
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - "one-frame"
