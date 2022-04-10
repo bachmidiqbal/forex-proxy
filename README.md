@@ -71,3 +71,6 @@ Response 400
 > {"errorMessage":"Invalid token!"}
 
 **Token is required for authentication**. Token is configurable for forex-proxy
+
+## Supported currencies are:
+- AUD, CAD, CHF, EUR, GBP, NZD, JPY, SGD, USD
